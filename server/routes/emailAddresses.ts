@@ -12,14 +12,10 @@ router.get(
         res.status(400).send(Error('Bad Request'));
         return;
       }
-
-      const doc = await firestore
-        .collection('emails')
-        .doc(req.params.uid)
-        .get();
+      const doc = await firestore.collection('users').doc(req.params.uid).get();
 
       if (!doc.exists) {
-        res.status(404).send(Error('Not Found'));
+        res.status(404).send(Error('User Not Found'));
         return;
       }
 
@@ -39,30 +35,21 @@ router.post(
     try {
       const { emailAddress } = req.body;
 
-      const doc = await firestore
-        .collection('emails')
-        .doc(req.params.uid)
-        .get();
+      const doc = await firestore.collection('users').doc(req.params.uid).get();
 
-      let response;
-
-      if (doc.exists) {
-        response = await firestore
-          .collection('emails')
-          .doc(req.params.uid)
-          .update({
-            emails: firebase.firestore.FieldValue.arrayUnion(emailAddress),
-          });
-      } else {
-        response = await firestore
-          .collection('emails')
-          .doc(req.params.uid)
-          .set({
-            emails: emailAddress,
-          });
+      if (!doc.exists) {
+        res.status(404).send(new Error('User document does not exist'));
+        return;
       }
 
-      res.status(200).send(response);
+      await firestore
+        .collection('users')
+        .doc(req.params.uid)
+        .update({
+          emails: firebase.firestore.FieldValue.arrayUnion(emailAddress),
+        });
+
+      res.status(200).send('OK');
     } catch (err) {
       console.error(err);
       res.status(500).send(err);
@@ -76,15 +63,15 @@ router.delete('/emails/:uid', async (req: Request, res: Response) => {
 
     const { emailAddress } = req.body;
 
-    const doc = await firestore.collection('emails').doc(uid).get();
+    const doc = await firestore.collection('users').doc(uid).get();
 
     if (!doc.exists) {
-      res.status(404).send(Error('Not Found'));
+      res.status(404).send(Error('User Not Found'));
       return;
     }
 
     await firestore
-      .collection('emails')
+      .collection('users')
       .doc(req.params.uid)
       .update({
         emails: firebase.firestore.FieldValue.arrayRemove(emailAddress),
