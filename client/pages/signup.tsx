@@ -14,10 +14,11 @@ import Link from 'next/link';
 import { FaGoogle } from 'react-icons/fa';
 import useAuth from '../data/useAuth';
 import EmailPasswordSignUpForm from '../components/EmailPasswordSignupForm';
+import { createUser } from '../data/user';
 
 export default function Signup() {
   const router = useRouter();
-  const { auth, signUpWithEmail, signUpWithGoogle } = useAuth();
+  const {  signUpWithEmail, signUpWithGoogle } = useAuth();
 
   const handleSignIn = useCallback(
     async (credential: firebase.auth.UserCredential) => {
@@ -30,9 +31,8 @@ export default function Signup() {
           credential.user.metadata.creationTime ===
           credential.user.metadata.lastSignInTime
         ) {
-          // TODO : function that creates a user documents in users collection in firestore
+          await createUser(credential.user)
         }
-
         router.push('/');
       } catch (err) {
         console.log(err);
@@ -58,7 +58,7 @@ export default function Signup() {
         })
         .then((firebaseCredential) => handleSignIn(firebaseCredential))
         .catch((err) => {
-          console.log(err);
+          console.log('error creating user with email password',err);
         });
     },
     [signUpWithEmail],

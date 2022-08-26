@@ -20,6 +20,7 @@ import {
 import Link from 'next/link';
 import { FaEye, FaGoogle } from 'react-icons/fa';
 import { EmailIcon, LockIcon } from '@chakra-ui/icons';
+import { createUser } from '../data/user';
 
 export default function Login() {
   const router = useRouter();
@@ -46,7 +47,7 @@ export default function Login() {
           credential.user.metadata.creationTime ===
           credential.user.metadata.lastSignInTime
         ) {
-          // TODO : function that creates a user documents in users collection in firestore
+          await createUser(credential.user);
         }
 
         router.push('/');
