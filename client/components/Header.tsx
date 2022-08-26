@@ -77,7 +77,7 @@ export default function Header() {
                 boxSize="42px"
                 size="sm"
                 name={auth?.displayName || 'user'}
-                src={auth?.photoURL}
+                src={auth?.photoURL || 'https://via.placeholder.com/150' }
               />
               <ChevronDownIcon boxSize="20px" />
             </HStack>

@@ -35,37 +35,6 @@ export default function Login() {
     [],
   );
 
-  const handleSignInWithEmail = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
-      loginWithEmail(email, password)
-        .then((credential) => handleSignIn(credential))
-        .catch((err) => {});
-    },
-    [email, password],
-  );
-
-  const handleSignInWithGoogle = useCallback(() => {
-    signUpWithGoogle()
-      .then((credential) => handleSignIn(credential))
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  const handleEmailInputChange = useCallback(
-    (ev: { currentTarget: { value: React.SetStateAction<string> } }) =>
-      setEmail(ev.currentTarget.value),
-    [],
-  );
-
-  const handlePasswordInputChange = useCallback(
-    (ev: { currentTarget: { value: React.SetStateAction<string> } }) =>
-      setPassword(ev.currentTarget.value),
-    [],
-  );
-
   const handleSignIn = useCallback(
     async (credential: firebase.auth.UserCredential) => {
       try {
@@ -87,6 +56,39 @@ export default function Login() {
     },
     [router],
   );
+
+  const handleSignInWithEmail = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      loginWithEmail(email, password)
+        .then((credential) => handleSignIn(credential))
+        .catch((err) => {});
+    },
+    [email, password],
+  );
+
+  const handleSignInWithGoogle = useCallback(() => {
+    signUpWithGoogle()
+      .then((credential) => handleSignIn(credential))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [handleSignIn, signUpWithGoogle]);
+
+  const handleEmailInputChange = useCallback(
+    (ev: { currentTarget: { value: React.SetStateAction<string> } }) =>
+      setEmail(ev.currentTarget.value),
+    [],
+  );
+
+  const handlePasswordInputChange = useCallback(
+    (ev: { currentTarget: { value: React.SetStateAction<string> } }) =>
+      setPassword(ev.currentTarget.value),
+    [],
+  );
+
+
 
   return (
     <Flex
