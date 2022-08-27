@@ -4,8 +4,7 @@ export async function createUser(user: firebase.User) {
   try {
     const url =
       process.env.NODE_ENV === 'production'
-        ? // TODO : enter the production url from heroku for api below
-          'http://localhost:8080/'
+        ? 'https://callypso.herokuapp.com/'
         : 'http://localhost:8080/';
 
     await fetch(`${url}users`, {
