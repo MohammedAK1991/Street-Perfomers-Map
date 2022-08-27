@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, {  useCallback } from 'react';
 import { useRouter } from 'next/router';
 import firebase from '../data/firebase';
 import {

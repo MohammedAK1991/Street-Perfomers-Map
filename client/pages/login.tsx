@@ -64,7 +64,7 @@ export default function Login() {
 
       loginWithEmail(email, password)
         .then((credential) => handleSignIn(credential))
-        .catch((err) => {});
+        .catch((err) => console.log(err));
     },
     [email, password],
   );
