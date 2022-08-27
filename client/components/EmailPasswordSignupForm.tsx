@@ -55,7 +55,6 @@ export default function EmailPasswordSignUpForm({
       ev.preventDefault();
       handleEmailSignUp(name, email, password);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [name, email, password],
   );
 
