@@ -44,3 +44,43 @@ export default function useEmailAddresses(): {
     mutate,
   };
 }
+
+export async function addEmailAddress(
+  auth: firebase.User | null,
+  emailAddress: string,
+) {
+  try {
+    const token = await auth?.getIdToken();
+    const url = getEnvironmentUrl();
+    await fetch(`${url}emails/${auth?.uid}`, {
+      method: 'POST',
+      body: JSON.stringify({ emailAddress }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.log('error adding email address to user doc', error);
+  }
+}
+
+export async function deleteEmailAddress(
+  auth: firebase.User,
+  emailAddress: string,
+) {
+  try {
+    const token = await auth.getIdToken();
+    const url = getEnvironmentUrl();
+    await fetch(`${url}emails/${auth.uid}`, {
+      method: 'DELETE',
+      body: JSON.stringify({ emailAddress }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.log('error deleting emailAddress from user doc', error);
+  }
+}
