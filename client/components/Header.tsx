@@ -34,7 +34,6 @@ export default function Header() {
 
   return (
     <Flex
-      position="fixed"
       zIndex={999}
       width="100%"
       height={HEADER_HEIGHT}
