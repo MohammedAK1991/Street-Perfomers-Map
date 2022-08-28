@@ -1,12 +1,9 @@
 import firebase from 'firebase';
+import { getEnvironmentUrl } from './utils';
 
 export async function createUser(user: firebase.User) {
   try {
-    const url =
-      process.env.NODE_ENV === 'production'
-        ? 'https://callypso.herokuapp.com/'
-        : 'http://localhost:8080/';
-
+    const url = getEnvironmentUrl();
     await fetch(`${url}users`, {
       method: 'POST',
       body: JSON.stringify({
