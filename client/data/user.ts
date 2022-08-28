@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import { getEnvironmentUrl } from './utils';
 
-export async function createUser(user: firebase.User) {
+export async function createUser(user: firebase.User, token: string) {
   try {
     const url = getEnvironmentUrl();
     await fetch(`${url}users`, {
@@ -11,8 +11,12 @@ export async function createUser(user: firebase.User) {
         email: user?.email,
         name: user?.displayName,
       }),
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
-  } catch (error) {}
-  console.log('error creating user doc in firestore');
+  } catch (error) {
+    console.log('error creating user doc in firestore');
+  }
 }

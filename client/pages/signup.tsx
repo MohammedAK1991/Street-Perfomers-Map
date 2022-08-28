@@ -1,4 +1,4 @@
-import React, {  useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import firebase from '../data/firebase';
 import {
@@ -18,7 +18,7 @@ import { createUser } from '../data/user';
 
 export default function Signup() {
   const router = useRouter();
-  const {  signUpWithEmail, signUpWithGoogle } = useAuth();
+  const { signUpWithEmail, signUpWithGoogle } = useAuth();
 
   const handleSignIn = useCallback(
     async (credential: firebase.auth.UserCredential) => {
@@ -31,7 +31,7 @@ export default function Signup() {
           credential.user.metadata.creationTime ===
           credential.user.metadata.lastSignInTime
         ) {
-          await createUser(credential.user)
+          await createUser(credential.user, await credential.user.getIdToken());
         }
         router.push('/');
       } catch (err) {
@@ -58,7 +58,7 @@ export default function Signup() {
         })
         .then((firebaseCredential) => handleSignIn(firebaseCredential))
         .catch((err) => {
-          console.log('error creating user with email password',err);
+          console.log('error creating user with email password', err);
         });
     },
     [signUpWithEmail],
