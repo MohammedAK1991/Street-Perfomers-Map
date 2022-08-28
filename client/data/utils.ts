@@ -6,3 +6,19 @@ export function getEnvironmentUrl() {
 
   return url;
 }
+
+export async function fetcherWithBearerToken(url: string, token: string) {
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = new Error('An error occurred while fetching the data.');
+    throw error;
+  }
+
+  return response.json();
+}
