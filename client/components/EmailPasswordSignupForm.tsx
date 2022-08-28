@@ -123,6 +123,7 @@ export default function EmailPasswordSignUpForm({
               bgColor="white"
               placeholder={'password'}
               size="lg"
+              autoComplete="true"
               isRequired
               _focus={{
                 borderColor: 'secondary',
@@ -155,6 +156,7 @@ export default function EmailPasswordSignUpForm({
               bgColor="white"
               placeholder={'repeat password'}
               size="lg"
+              autoComplete="true"
               py={5}
               px={4}
               isRequired
