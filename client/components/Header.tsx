@@ -37,8 +37,9 @@ export default function Header() {
       zIndex={999}
       width="100%"
       height={HEADER_HEIGHT}
-      bgColor="#2a9d8f"
+      bgColor="#091E3F"
       borderWidth="1px"
+      color="white"
       borderBottomColor="surfaceVariant"
       align="center"
       direction="row"
@@ -46,8 +47,13 @@ export default function Header() {
     >
       <Link href="/" passHref>
         <HStack cursor="pointer">
-          <Heading as="a" display={['flex']} fontSize="2xl" color="primary">
-            Callypso assignment
+          <Heading
+            as="a"
+            display={['flex']}
+            fontSize="2xl"
+            fontFamily="verdana"
+          >
+            Bulk Email Sender App
           </Heading>
         </HStack>
       </Link>
@@ -76,7 +82,7 @@ export default function Header() {
                 boxSize="42px"
                 size="sm"
                 name={auth?.displayName || 'user'}
-                src={auth?.photoURL || 'https://via.placeholder.com/150' }
+                src={auth?.photoURL || 'https://via.placeholder.com/150'}
               />
               <ChevronDownIcon boxSize="20px" />
             </HStack>
@@ -87,6 +93,7 @@ export default function Header() {
               fontFamily="heading"
               fontWeight="400"
               fontSize="sm"
+              color="black"
               py="2"
               onClick={handleOnSignOutClick}
             >
