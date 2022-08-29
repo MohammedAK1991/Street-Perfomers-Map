@@ -66,13 +66,13 @@ export async function addEmailAddress(
 }
 
 export async function deleteEmailAddress(
-  auth: firebase.User,
+  auth: firebase.User | null,
   emailAddress: string,
 ) {
   try {
-    const token = await auth.getIdToken();
+    const token = await auth?.getIdToken();
     const url = getEnvironmentUrl();
-    await fetch(`${url}emails/${auth.uid}`, {
+    await fetch(`${url}emails/${auth?.uid}`, {
       method: 'DELETE',
       body: JSON.stringify({ emailAddress }),
       headers: {
@@ -82,5 +82,26 @@ export async function deleteEmailAddress(
     });
   } catch (error) {
     console.log('error deleting emailAddress from user doc', error);
+  }
+}
+
+export async function editEmailAddress(
+  auth: firebase.User | null,
+  id: string,
+  updatedEmailAddress: string,
+) {
+  try {
+    const token = await auth?.getIdToken();
+    const url = getEnvironmentUrl();
+    await fetch(`${url}emails/${auth?.uid}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ id, updatedEmailAddress }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.log('error editing emailAddress from user doc', error);
   }
 }
