@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import {
   Flex,
@@ -34,7 +34,7 @@ export default function Home() {
   const [emailText, setEmailText] = useState('');
   const [newEmailAddress, setNewEmailAddress] = useState('');
 
-  function handleInputChange(e) {
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = e.target.value;
     setEmailText(inputValue);
   }

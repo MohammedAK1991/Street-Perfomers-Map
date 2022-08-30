@@ -15,7 +15,8 @@
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "next"
   ],
   "rules": {
     // Place to specify and overwrite ESLint rules
