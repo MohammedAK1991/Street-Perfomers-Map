@@ -34,11 +34,6 @@ export default function Home() {
   const [emailText, setEmailText] = useState('');
   const [newEmailAddress, setNewEmailAddress] = useState('');
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const inputValue = e.target.value;
-    setEmailText(inputValue);
-  }
-
   const { emailAddresses, mutate } = useEmailAddresses();
 
   return (
@@ -104,7 +99,9 @@ export default function Home() {
             lineHeight={6}
             minH="60vh"
             value={emailText}
-            onChange={handleInputChange}
+            onChange={(e) => {
+              setEmailText(e.target.value);
+            }}
             placeholder="Please enter the email body here. The email will be sent to all the emails from your mailing list on the left. You may edit, add or delete items from your mailing list as you wish"
             size="sm"
           />
