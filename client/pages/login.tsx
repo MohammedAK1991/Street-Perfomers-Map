@@ -66,7 +66,7 @@ export default function Login() {
         .then((credential) => handleSignIn(credential))
         .catch((err) => console.log(err));
     },
-    [email, password],
+    [email, handleSignIn, loginWithEmail, password],
   );
 
   const handleSignInWithGoogle = useCallback(() => {
