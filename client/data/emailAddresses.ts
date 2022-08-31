@@ -5,7 +5,6 @@ import { getEnvironmentUrl, fetcherWithBearerToken } from './utils';
 import firebase from 'firebase/app';
 
 interface EmailAddress {
-  id: string;
   email: string;
 }
 

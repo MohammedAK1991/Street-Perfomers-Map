@@ -7,7 +7,6 @@ import useEmailAddresses, {
 import useAuth from '../data/useAuth';
 
 interface EmailListItemProps {
-  id: string;
   email: string;
 }
 
@@ -21,9 +20,9 @@ export default function EmailListItem({
   const { mutate } = useEmailAddresses();
 
   return (
-    <InputGroup key={emailListItem.id} width="auto">
+    <InputGroup key={emailListItem.email} width="auto">
       <Input
-        key={emailListItem.id}
+        key={emailListItem.email}
         value={newEmailAddress}
         onChange={(e) => {
           setNewEmailAddress(e.target.value);
@@ -34,7 +33,7 @@ export default function EmailListItem({
           px="8"
           size="md"
           onClick={async () => {
-            await editEmailAddress(auth, emailListItem.id, newEmailAddress);
+            await editEmailAddress(auth, emailListItem.email, newEmailAddress);
             mutate();
           }}
         >
