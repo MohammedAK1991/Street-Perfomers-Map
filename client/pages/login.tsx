@@ -47,7 +47,7 @@ export default function Login() {
           credential.user.metadata.creationTime ===
           credential.user.metadata.lastSignInTime
         ) {
-          await createUser(credential.user);
+          await createUser(credential.user, await credential.user.getIdToken());
         }
 
         router.push('/');
@@ -66,7 +66,7 @@ export default function Login() {
         .then((credential) => handleSignIn(credential))
         .catch((err) => console.log(err));
     },
-    [email, password],
+    [email, handleSignIn, loginWithEmail, password],
   );
 
   const handleSignInWithGoogle = useCallback(() => {
@@ -88,8 +88,6 @@ export default function Login() {
       setPassword(ev.currentTarget.value),
     [],
   );
-
-
 
   return (
     <Flex

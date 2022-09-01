@@ -26,22 +26,22 @@ export default function EmailPasswordSignUpForm({
   const [showPassword, setShowPassword] = useState(false);
 
   const handleNameInputChange = useCallback(
-    (ev: { currentTarget: { value: React.SetStateAction<string> } }) =>
+    (ev: React.ChangeEvent<HTMLInputElement>) =>
       setName(ev.currentTarget.value),
     [],
   );
   const handleEmailInputChange = useCallback(
-    (ev: { currentTarget: { value: React.SetStateAction<string> } }) =>
+    (ev: React.ChangeEvent<HTMLInputElement>) =>
       setEmail(ev.currentTarget.value),
     [],
   );
   const handlePasswordInputChange = useCallback(
-    (ev: { currentTarget: { value: React.SetStateAction<string> } }) =>
+    (ev: React.ChangeEvent<HTMLInputElement>) =>
       setPassword(ev.currentTarget.value),
     [],
   );
   const handleConfirmPasswordInputChange = useCallback(
-    (ev: { currentTarget: { value: React.SetStateAction<string> } }) =>
+    (ev: React.ChangeEvent<HTMLInputElement>) =>
       setConfirmPassword(ev.currentTarget.value),
     [],
   );
@@ -55,7 +55,7 @@ export default function EmailPasswordSignUpForm({
       ev.preventDefault();
       handleEmailSignUp(name, email, password);
     },
-    [name, email, password],
+    [handleEmailSignUp, name, email, password],
   );
 
   return (
@@ -123,6 +123,7 @@ export default function EmailPasswordSignUpForm({
               bgColor="white"
               placeholder={'password'}
               size="lg"
+              autoComplete="true"
               isRequired
               _focus={{
                 borderColor: 'secondary',
@@ -155,6 +156,7 @@ export default function EmailPasswordSignUpForm({
               bgColor="white"
               placeholder={'repeat password'}
               size="lg"
+              autoComplete="true"
               py={5}
               px={4}
               isRequired

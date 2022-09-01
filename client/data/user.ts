@@ -1,12 +1,9 @@
 import firebase from 'firebase';
+import { getEnvironmentUrl } from './utils';
 
-export async function createUser(user: firebase.User) {
+export async function createUser(user: firebase.User, token: string) {
   try {
-    const url =
-      process.env.NODE_ENV === 'production'
-        ? 'https://callypso.herokuapp.com/'
-        : 'http://localhost:8080/';
-
+    const url = getEnvironmentUrl();
     await fetch(`${url}users`, {
       method: 'POST',
       body: JSON.stringify({
@@ -14,8 +11,12 @@ export async function createUser(user: firebase.User) {
         email: user?.email,
         name: user?.displayName,
       }),
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
-  } catch (error) {}
-  console.log('error creating user doc in firestore');
+  } catch (error) {
+    console.log('error creating user doc in firestore');
+  }
 }

@@ -15,12 +15,14 @@
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "next"
   ],
   "rules": {
     // Place to specify and overwrite ESLint rules
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/ban-ts-comment": "off"
   }
 }
