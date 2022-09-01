@@ -87,12 +87,6 @@ export default function Home() {
     console.log('error getting email addresseses');
   }
 
-  console.log(
-    process.env.NEXT_PUBLIC_SERVICE_ID,
-    process.env.NEXT_PUBLIC_TEMPLATE_ID,
-    process.env.NEXT_PUBLIC_PUBLIC_KEY,
-  );
-
   const sendEmail = useCallback(
     async (e: { preventDefault: () => void }) => {
       e.preventDefault();
