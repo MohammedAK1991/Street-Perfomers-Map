@@ -5,6 +5,7 @@ import {
   InputRightElement,
   Input,
   InputLeftElement,
+  useToast,
 } from '@chakra-ui/react';
 import useEmailAddresses, {
   deleteEmailAddress,
@@ -24,6 +25,7 @@ export default function EmailListItem({
   emailListItem: EmailListItemProps;
 }) {
   const { auth } = useAuth();
+  const toast = useToast();
   const [newEmailAddress, setNewEmailAddress] = useState(emailListItem.email);
   const { mutate } = useEmailAddresses();
 
@@ -46,6 +48,10 @@ export default function EmailListItem({
           onClick={async () => {
             await editEmailAddress(auth, emailListItem.id, newEmailAddress);
             mutate();
+            toast({
+              status: 'info',
+              description: 'Contact updated',
+            });
           }}
           icon={<EditIcon color="orange" />}
         />
@@ -55,6 +61,10 @@ export default function EmailListItem({
           onClick={async () => {
             await deleteEmailAddress(auth, emailListItem.id);
             mutate();
+            toast({
+              status: 'warning',
+              description: 'Contact deleted from database',
+            });
           }}
           icon={<DeleteIcon color="red" />}
         />
