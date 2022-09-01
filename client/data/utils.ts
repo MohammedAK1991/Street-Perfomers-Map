@@ -22,3 +22,7 @@ export async function fetcherWithBearerToken(url: string, token: string) {
 
   return response.json();
 }
+
+export async function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
