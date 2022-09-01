@@ -1,12 +1,20 @@
 import { useState } from 'react';
-import { InputGroup, InputRightElement, Input, Button } from '@chakra-ui/react';
+import {
+  InputGroup,
+  IconButton,
+  InputRightElement,
+  Input,
+  InputLeftElement,
+} from '@chakra-ui/react';
 import useEmailAddresses, {
   deleteEmailAddress,
   editEmailAddress,
 } from '../data/emailAddresses';
 import useAuth from '../data/useAuth';
+import { EmailIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
-interface EmailListItemProps {
+export interface EmailListItemProps {
+  id: string;
   email: string;
 }
 
@@ -20,37 +28,36 @@ export default function EmailListItem({
   const { mutate } = useEmailAddresses();
 
   return (
-    <InputGroup key={emailListItem.email} width="auto">
+    <InputGroup key={emailListItem.id} width="auto" minWidth="360px">
+      <InputLeftElement>
+        <EmailIcon color="teal" bg="grey.100" />
+      </InputLeftElement>
       <Input
-        key={emailListItem.email}
+        key={emailListItem.id}
         value={newEmailAddress}
         onChange={(e) => {
           setNewEmailAddress(e.target.value);
         }}
       />
       <InputRightElement>
-        <Button
-          px="8"
+        <IconButton
           size="md"
+          aria-label="edit email"
           onClick={async () => {
-            await editEmailAddress(auth, emailListItem.email, newEmailAddress);
+            await editEmailAddress(auth, emailListItem.id, newEmailAddress);
             mutate();
           }}
-        >
-          Edit
-        </Button>
-        <Button
-          px="8"
-          color="white"
-          bg="red"
+          icon={<EditIcon color="orange" />}
+        />
+        <IconButton
           size="md"
+          aria-label="delete email"
           onClick={async () => {
-            await deleteEmailAddress(auth, emailListItem.email);
+            await deleteEmailAddress(auth, emailListItem.id);
             mutate();
           }}
-        >
-          Delete
-        </Button>
+          icon={<DeleteIcon color="red" />}
+        />
       </InputRightElement>
     </InputGroup>
   );
