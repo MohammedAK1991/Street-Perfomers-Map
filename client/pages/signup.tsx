@@ -47,7 +47,7 @@ export default function Signup() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [handleSignIn, signUpWithGoogle]);
 
   const handleEmailSignUp = useCallback(
     (name: string, email: string, password: string) => {
@@ -61,7 +61,7 @@ export default function Signup() {
           console.log('error creating user with email password', err);
         });
     },
-    [signUpWithEmail],
+    [handleSignIn, signUpWithEmail],
   );
 
   return (
