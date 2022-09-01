@@ -13,7 +13,10 @@ yarn install
 
 Setup prerequisites
 
-For an example how to fill ==.env.local== see ==.env.example==
+For an example how to fill .env.local  see .env.example
+
+To get the variables for .env.local you will need to create a new free account with [https://www.emailjs.com/](https://www.emailjs.com/)
+
 
 Run the development server:
 
