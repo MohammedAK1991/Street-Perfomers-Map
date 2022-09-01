@@ -127,6 +127,7 @@ export default function Home() {
             status: 'error',
             description: `error sending email to ${email}, please check console`,
           });
+          onClose();
         }
       }
     },
