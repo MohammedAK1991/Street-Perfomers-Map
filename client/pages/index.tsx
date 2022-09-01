@@ -12,8 +12,6 @@ import {
   Button,
   Divider,
   chakra,
-  FormControl,
-  FormLabel,
   useToast,
   useDisclosure,
   Modal,
@@ -21,15 +19,20 @@ import {
   ModalContent,
   Spinner,
   ModalBody,
+  IconButton,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import firebase from '../data/firebase';
 import Header from '../components/Header';
 import useEmailAddresses, { addEmailAddress } from '../data/emailAddresses';
+import { getEmailBody, updateEmailBody } from '../data/emailBody';
 import useAuth from '../data/useAuth';
 import EmailListItem from '../components/EmailListItem';
 import { CheckIcon } from '@chakra-ui/icons';
 import emailjs from '@emailjs/browser';
+import { Autosave, useAutosave } from 'react-autosave';
+import { getEnvironmentUrl } from '../data/utils';
+import { AddIcon } from '@chakra-ui/icons';
 
 export default function Home() {
   const toast = useToast();
@@ -53,12 +56,33 @@ export default function Home() {
   const [currentEmailRecepient, setCurrentEmailRecepient] = useState('');
   const [emailSentSuccessfully, setEmailSentSuccessfully] = useState(false);
 
+  const url = getEnvironmentUrl();
+
+  const updateBody = React.useCallback(
+    (emailText: string) => updateEmailBody(emailText),
+    [],
+  );
+
+  useEffect(() => {
+    getEmailBody()
+      .then((res) => {
+        console.log({ res });
+        setEmailText(res.body);
+      })
+      .catch((e) => {
+        console.log(e);
+        setEmailText('');
+      });
+  }, [auth, url]);
+
+  useAutosave({ data: emailText, onSave: updateBody });
+
   const { emailAddresses, mutate } = useEmailAddresses();
 
   const wait = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
-  async function sendEmail(e) {
+  async function sendEmail(e: { preventDefault: () => void }) {
     e.preventDefault();
 
     for await (const doc of emailAddresses) {
@@ -80,7 +104,6 @@ export default function Home() {
         templateParams,
         process.env.NEXT_PUBLIC_PUBLIC_KEY,
       );
-      console.log(res);
       if (res.text === 'OK') {
         setEmailSentSuccessfully(true);
       }
@@ -105,11 +128,11 @@ export default function Home() {
       <Header />
 
       <Flex flexGrow={1}>
-        <Stack mr={10} p={['2', '8']}>
-          <Heading fontSize="2xl">Contacts</Heading>
+        <Stack mr={10} p={['2', '7']}>
+          <Heading fontSize="xl">To</Heading>
 
-          <Stack pt={4} spacing={4}>
-            <InputGroup minWidth="350px">
+          <Stack pt={2} spacing={4}>
+            <InputGroup w="full">
               <Input
                 value={newEmailAddress}
                 onChange={(e) => {
@@ -119,48 +142,43 @@ export default function Home() {
                 w="full"
               />
               <InputRightElement>
-                <Button
+                <IconButton
                   px="8"
                   size="md"
+                  aria-label="edit email"
                   onClick={async () => {
                     await addEmailAddress(auth, newEmailAddress);
                     mutate();
                     setNewEmailAddress('');
                   }}
-                >
-                  Add
-                </Button>
+                  icon={<AddIcon color="blue.500" />}
+                />
               </InputRightElement>
             </InputGroup>
-            {emailAddresses
-              ? emailAddresses.map((emailListItem) => {
-                  return (
-                    <EmailListItem
-                      key={emailListItem.email}
-                      emailListItem={emailListItem}
-                    />
-                  );
-                })
-              : null}
           </Stack>
+          {emailAddresses
+            ? emailAddresses.map((emailListItem) => {
+                return (
+                  <EmailListItem
+                    key={emailListItem.id}
+                    emailListItem={emailListItem}
+                  />
+                );
+              })
+            : null}
         </Stack>
 
         <Divider height="100%" orientation="vertical" />
 
         <Box flexGrow={1} p={['2', '8']}>
-          <Heading fontSize="2xl" mb="6">
-            Enter the body of the email below :
-          </Heading>
           <chakra.form onSubmit={sendEmail}>
-            <FormControl>
-              <FormLabel>Subject</FormLabel>
-              <Input
-                type="text"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                mb="2"
-              />
-            </FormControl>
+            <Input
+              type="text"
+              value={subject}
+              placeholder="Subject"
+              onChange={(e) => setSubject(e.target.value)}
+              mb="2"
+            />
 
             <Textarea
               w="full"
@@ -175,6 +193,8 @@ export default function Home() {
               placeholder="Please enter the email body here. The email will be sent to all the emails from your mailing list on the left. You may edit, add or delete items from your mailing list as you wish"
               size="sm"
             />
+            <Autosave data={emailText} onSave={updateBody} />
+
             <Button mt={2} type="submit">
               Send
             </Button>
@@ -183,7 +203,7 @@ export default function Home() {
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="2xl">
         <ModalOverlay />
-        <ModalContent px="4" py={12}>
+        <ModalContent px="4" py={8}>
           <ModalBody>
             <Stack
               spacing={8}
