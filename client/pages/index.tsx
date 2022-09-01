@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Head from 'next/head';
 import {
   Flex,
@@ -31,7 +31,7 @@ import EmailListItem from '../components/EmailListItem';
 import { CheckIcon } from '@chakra-ui/icons';
 import emailjs from '@emailjs/browser';
 import { Autosave, useAutosave } from 'react-autosave';
-import { getEnvironmentUrl } from '../data/utils';
+import { getEnvironmentUrl, wait } from '../data/utils';
 import { AddIcon } from '@chakra-ui/icons';
 
 export default function Home() {
@@ -58,7 +58,7 @@ export default function Home() {
 
   const url = getEnvironmentUrl();
 
-  const updateBody = React.useCallback(
+  const updateBody = useCallback(
     (emailText: string) => updateEmailBody(emailText),
     [],
   );
@@ -66,56 +66,64 @@ export default function Home() {
   useEffect(() => {
     getEmailBody()
       .then((res) => {
-        console.log({ res });
         setEmailText(res.body);
       })
       .catch((e) => {
-        console.log(e);
+        console.log('error getting email body from databsee', e);
         setEmailText('');
       });
   }, [auth, url]);
 
   useAutosave({ data: emailText, onSave: updateBody });
 
-  const { emailAddresses, mutate } = useEmailAddresses();
+  const {
+    emailAddresses,
+    loading: loadingEmailAddresses,
+    error,
+    mutate,
+  } = useEmailAddresses();
 
-  const wait = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  async function sendEmail(e: { preventDefault: () => void }) {
-    e.preventDefault();
-
-    for await (const doc of emailAddresses) {
-      onOpen();
-      setEmailSentSuccessfully(false);
-      setLoading(true);
-      const { email } = doc;
-      setCurrentEmailRecepient(email);
-      const templateParams = {
-        to_email: email,
-        subject: subject,
-        message: emailText,
-      };
-
-      const res = await emailjs.send(
-        // @ts-ignore
-        process.env.NEXT_PUBLIC_SERVICE_ID,
-        process.env.NEXT_PUBLIC_TEMPLATE_ID,
-        templateParams,
-        process.env.NEXT_PUBLIC_PUBLIC_KEY,
-      );
-      if (res.text === 'OK') {
-        setEmailSentSuccessfully(true);
-      }
-      setLoading(false);
-      await wait(1000);
-      onClose();
-    }
-    toast({
-      status: 'success',
-      description: 'emails sent to your mailing list',
-    });
+  if (error) {
+    console.log('error getting email addresseses');
   }
+
+  const sendEmail = useCallback(
+    async (e: { preventDefault: () => void }) => {
+      e.preventDefault();
+
+      for await (const doc of emailAddresses) {
+        onOpen();
+        setEmailSentSuccessfully(false);
+        setLoading(true);
+        const { email } = doc;
+        setCurrentEmailRecepient(email);
+        const templateParams = {
+          to_email: email,
+          subject: subject,
+          message: emailText,
+        };
+
+        const res = await emailjs.send(
+          // @ts-ignore
+          process.env.NEXT_PUBLIC_SERVICE_ID,
+          process.env.NEXT_PUBLIC_TEMPLATE_ID,
+          templateParams,
+          process.env.NEXT_PUBLIC_PUBLIC_KEY,
+        );
+        if (res.text === 'OK') {
+          setEmailSentSuccessfully(true);
+        }
+        setLoading(false);
+        await wait(1000);
+        onClose();
+      }
+      toast({
+        status: 'success',
+        description: 'emails sent to your mailing list',
+      });
+    },
+    [emailAddresses, emailText, onClose, onOpen, subject, toast],
+  );
 
   return (
     <Box h="100vh" w="100vw" bg="white" display="flex" flexDirection="column">
@@ -156,6 +164,17 @@ export default function Home() {
               </InputRightElement>
             </InputGroup>
           </Stack>
+
+          {loadingEmailAddresses ? (
+            <Spinner
+              thickness="4px"
+              speed="0.85s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="lg"
+            />
+          ) : null}
+
           {emailAddresses
             ? emailAddresses.map((emailListItem) => {
                 return (
@@ -201,6 +220,7 @@ export default function Home() {
           </chakra.form>
         </Box>
       </Flex>
+      {/* Modal to show progress of emails being sent to contact list*/}
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="2xl">
         <ModalOverlay />
         <ModalContent px="4" py={8}>
