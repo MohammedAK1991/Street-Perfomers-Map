@@ -5,6 +5,7 @@ import { getEnvironmentUrl, fetcherWithBearerToken } from './utils';
 import firebase from 'firebase/app';
 
 interface EmailAddress {
+  id: string;
   email: string;
 }
 
@@ -66,14 +67,14 @@ export async function addEmailAddress(
 
 export async function deleteEmailAddress(
   auth: firebase.User | null,
-  emailAddress: string,
+  id: string,
 ) {
   try {
     const token = await auth?.getIdToken();
     const url = getEnvironmentUrl();
     await fetch(`${url}emails/${auth?.uid}`, {
       method: 'DELETE',
-      body: JSON.stringify({ emailAddress }),
+      body: JSON.stringify({ id }),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
