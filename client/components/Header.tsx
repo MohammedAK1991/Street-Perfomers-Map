@@ -37,7 +37,7 @@ export default function Header() {
       zIndex={999}
       width="100%"
       height={HEADER_HEIGHT}
-      bgColor="#091E3F"
+      bgColor="teal"
       borderWidth="1px"
       color="white"
       borderBottomColor="surfaceVariant"
