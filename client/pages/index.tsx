@@ -109,24 +109,32 @@ export default function Home() {
           message: emailText,
         };
 
-        const res = await emailjs.send(
-          // @ts-ignore
-          process.env.NEXT_PUBLIC_SERVICE_ID,
-          process.env.NEXT_PUBLIC_TEMPLATE_ID,
-          templateParams,
-          process.env.NEXT_PUBLIC_PUBLIC_KEY,
-        );
-        if (res.text === 'OK') {
-          setEmailSentSuccessfully(true);
+        try {
+          const res = await emailjs.send(
+            // @ts-ignore
+            process.env.NEXT_PUBLIC_SERVICE_ID,
+            process.env.NEXT_PUBLIC_TEMPLATE_ID,
+            templateParams,
+            process.env.NEXT_PUBLIC_PUBLIC_KEY,
+          );
+          if (res.text === 'OK') {
+            setEmailSentSuccessfully(true);
+          }
+          setLoading(false);
+          await wait(1000);
+          onClose();
+          toast({
+            status: 'success',
+            description: 'emails sent to your mailing list',
+          });
+        } catch (error) {
+          console.log(error);
+          toast({
+            status: 'error',
+            description: `error sending email to ${email}, please check console`,
+          });
         }
-        setLoading(false);
-        await wait(1000);
-        onClose();
       }
-      toast({
-        status: 'success',
-        description: 'emails sent to your mailing list',
-      });
     },
     [emailAddresses, emailText, onClose, onOpen, subject, toast],
   );
