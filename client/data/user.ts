@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 
-export async function createUser(user: firebase.User) {
+export async function createUser(user: firebase.User, token: string) {
   try {
+    console.log('user', user);
     const url =
       process.env.NODE_ENV === 'production'
         ? 'https://callypso.herokuapp.com/'
@@ -14,8 +15,13 @@ export async function createUser(user: firebase.User) {
         email: user?.email,
         name: user?.displayName,
       }),
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
     });
-  } catch (error) {}
-  console.log('error creating user doc in firestore');
+  } catch (error: any) {
+    console.log('error creating user doc in firestore');
+    console.log(error.message);
+  }
 }
