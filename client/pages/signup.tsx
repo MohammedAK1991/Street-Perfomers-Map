@@ -31,7 +31,7 @@ export default function Signup() {
           credential.user.metadata.creationTime ===
           credential.user.metadata.lastSignInTime
         ) {
-          await createUser(credential.user)
+          await createUser(credential.user, await credential.user.getIdToken());
         }
         router.push('/');
       } catch (err) {
