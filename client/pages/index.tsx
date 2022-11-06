@@ -16,17 +16,17 @@ export default function Home() {
   }, [router]);
 
   return (
-    <Box h="100vh" w="100vw" bg="white" display="flex">
+    <Box h='100vh' w='100vw' bg='white' display='flex'>
       <Head>
-        <title>Calllypso coding assignemt</title>
-        <meta name="description" content="Calllypso coding assignemt" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>Street Perfomers Map </title>
+        <meta name='description' content='Calllypso coding assignemt' />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <Header />
 
-      <Heading mx="auto" my="auto">
-        Welcome to callypso coding assignment
+      <Heading mx='auto' my='auto'>
+        Welcome to Street Perfomers Map
       </Heading>
     </Box>
   );
