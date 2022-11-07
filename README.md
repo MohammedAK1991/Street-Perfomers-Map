@@ -30,7 +30,7 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
-The backend code for this project can be found at [ca-backend](https://github.com/MohammedAK1991/Street-Perfomers-Map-Backend)
+The backend code for this project can be found at [Street-Perfomers-Map-Backend](https://github.com/MohammedAK1991/Street-Perfomers-Map-Backend)
 
 #### Things i would improve
 - Make the UI fully responsive
