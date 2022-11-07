@@ -26,7 +26,7 @@ export default function Home() {
       <Header />
 
       <Heading mx='auto' my='auto'>
-        Welcome to Street Perfomers Map
+        Welcome to Street Perfomers Map!
       </Heading>
     </Box>
   );
