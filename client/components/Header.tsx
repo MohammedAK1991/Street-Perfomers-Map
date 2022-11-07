@@ -25,7 +25,7 @@ export default function Header() {
   const HEADER_HEIGHT = '72px';
 
   const { auth, loading, signOut } = useAuth();
-  console.log('auth', auth);
+  console.log('auth user', auth);
 
   const handleOnSignOutClick = useCallback(() => {
     signOut()
