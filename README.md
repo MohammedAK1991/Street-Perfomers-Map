@@ -1,5 +1,5 @@
 
-This entire website with the hosted backend has been hosted by vercel at this [link](https://callypso.vercel.app/)
+This entire website with the hosted backend has been hosted by vercel at this [link](https://street-performers-map.vercel.app/)
 ## Getting Started
 ### These instruction will help you setup a local development instance of the app.
 
@@ -30,7 +30,7 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
-The backend code for this project can be found at [ca-backend](https://github.com/MohammedAK1991/ca-backend)
+The backend code for this project can be found at [ca-backend](https://github.com/MohammedAK1991/Street-Perfomers-Map-Backend)
 
 #### Things i would improve
 - Make the UI fully responsive
