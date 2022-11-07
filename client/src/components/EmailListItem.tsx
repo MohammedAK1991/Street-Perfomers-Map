@@ -30,9 +30,9 @@ export default function EmailListItem({
   const { mutate } = useEmailAddresses();
 
   return (
-    <InputGroup key={emailListItem.id} width="auto" minWidth="360px">
+    <InputGroup key={emailListItem.id} width='auto' minWidth='360px'>
       <InputLeftElement>
-        <EmailIcon color="teal" bg="grey.100" />
+        <EmailIcon color='teal' bg='grey.100' />
       </InputLeftElement>
       <Input
         key={emailListItem.id}
@@ -43,8 +43,8 @@ export default function EmailListItem({
       />
       <InputRightElement>
         <IconButton
-          size="md"
-          aria-label="edit email"
+          size='md'
+          aria-label='edit email'
           onClick={async () => {
             await editEmailAddress(auth, emailListItem.id, newEmailAddress);
             mutate();
@@ -53,11 +53,11 @@ export default function EmailListItem({
               description: 'Contact updated',
             });
           }}
-          icon={<EditIcon color="orange" />}
+          icon={<EditIcon color='orange' />}
         />
         <IconButton
-          size="md"
-          aria-label="delete email"
+          size='md'
+          aria-label='delete email'
           onClick={async () => {
             await deleteEmailAddress(auth, emailListItem.id);
             mutate();
@@ -66,7 +66,7 @@ export default function EmailListItem({
               description: 'Contact deleted from database',
             });
           }}
-          icon={<DeleteIcon color="red" />}
+          icon={<DeleteIcon color='red' />}
         />
       </InputRightElement>
     </InputGroup>

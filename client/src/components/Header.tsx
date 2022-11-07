@@ -22,7 +22,7 @@ import useAuth from '../data/useAuth';
 export default function Header() {
   const router = useRouter();
 
-  const HEADER_HEIGHT = '72px';
+  const HEADER_HEIGHT = '60px';
 
   const { auth, loading, signOut } = useAuth();
 
@@ -35,25 +35,25 @@ export default function Header() {
   return (
     <Flex
       zIndex={999}
-      width="100%"
+      width='100%'
       height={HEADER_HEIGHT}
-      bgColor="teal"
-      borderWidth="1px"
-      color="white"
-      borderBottomColor="surfaceVariant"
-      align="center"
-      direction="row"
+      bgColor='black'
+      borderWidth='1px'
+      color='white'
+      borderBottomColor='surfaceVariant'
+      align='center'
+      direction='row'
       p={['1', '4']}
     >
-      <Link href="/" passHref>
-        <HStack cursor="pointer">
+      <Link href='/' passHref>
+        <HStack cursor='pointer'>
           <Heading
-            as="a"
+            as='a'
             display={['flex']}
-            fontSize="2xl"
-            fontFamily="verdana"
+            fontSize='2xl'
+            fontFamily='Manrope'
           >
-            Bulk Email Sender App
+            Street Performers Map{' '}
           </Heading>
         </HStack>
       </Link>
@@ -61,40 +61,40 @@ export default function Header() {
       <Spacer />
 
       {auth && (
-        <Text mx="3" display={['none', 'flex']}>
+        <Text mx='3' display={['none', 'flex']}>
           {auth?.email}
         </Text>
       )}
 
       {auth ? (
-        <Menu autoSelect={false} size="sm">
+        <Menu autoSelect={false} size='sm'>
           <MenuButton>
             <HStack
-              mr="1"
-              spacing="2"
-              cursor="pointer"
-              minW="60px"
-              alignItems="center"
+              mr='1'
+              spacing='2'
+              cursor='pointer'
+              minW='60px'
+              alignItems='center'
             >
               <Avatar
-                bg="primary"
-                color="surface"
-                boxSize="42px"
-                size="sm"
+                bg='primary'
+                color='surface'
+                boxSize='42px'
+                size='sm'
                 name={auth?.displayName || 'user'}
                 src={auth?.photoURL || 'https://via.placeholder.com/150'}
               />
-              <ChevronDownIcon boxSize="20px" />
+              <ChevronDownIcon boxSize='20px' />
             </HStack>
           </MenuButton>
-          <MenuList py="0" bgColor="surface">
+          <MenuList py='0' bgColor='onSurface'>
             <MenuItem
               _hover={{ bgColor: 'surfaceVariant' }}
-              fontFamily="heading"
-              fontWeight="400"
-              fontSize="sm"
-              color="black"
-              py="2"
+              fontFamily='heading'
+              fontWeight='400'
+              fontSize='sm'
+              color='black'
+              py='2'
               onClick={handleOnSignOutClick}
             >
               Logout
@@ -102,13 +102,20 @@ export default function Header() {
           </MenuList>
         </Menu>
       ) : !loading ? (
-        <Link href="/login" passHref>
-          <Button size="sm" variant="primary" minW="unset">
-            Login
-          </Button>
-        </Link>
+        <>
+          <Link href='/login' passHref>
+            <Button size='sm' variant='ghost' minW='unset' mr='10px'>
+              Login
+            </Button>
+          </Link>
+          <Link href='/signup' passHref>
+            <Button size='sm' variant='primary' minW='unset'>
+              Sign Up
+            </Button>
+          </Link>
+        </>
       ) : (
-        <Skeleton mx="4" opacity={0.5} rounded="lg" w="60px" h="30px" />
+        <Skeleton mx='4' opacity={0.5} rounded='lg' w='60px' h='30px' />
       )}
     </Flex>
   );
