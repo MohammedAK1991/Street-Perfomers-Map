@@ -21,7 +21,7 @@ import Link from 'next/link';
 import { FaEye, FaGoogle } from 'react-icons/fa';
 import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 import { createUser } from '../data/user';
-import Header from '../components/Header';
+import Header from '../components/common/Header';
 
 export default function Login() {
   const router = useRouter();

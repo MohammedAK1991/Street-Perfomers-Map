@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import firebase from '../data/firebase';
-import Header from '../components/Header';
+import Header from '../components/common/Header';
 import useEmailAddresses, { addEmailAddress } from '../data/emailAddresses';
 import { getEmailBody, updateEmailBody } from '../data/emailBody';
 import useAuth from '../data/useAuth';

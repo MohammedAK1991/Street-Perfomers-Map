@@ -2,7 +2,7 @@ export const styles = {
   global: () => ({
     'html, body, #__next, #root': {
       lineHeight: 'tall',
-      backgroundColor: 'surface',
+      backgroundColor: 'white',
       letterSpacing: '0.2px',
       display: 'flex',
       minHeight: '100vh',

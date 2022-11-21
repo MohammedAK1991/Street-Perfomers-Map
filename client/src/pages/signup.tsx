@@ -15,7 +15,7 @@ import { FaGoogle } from 'react-icons/fa';
 import useAuth from '../data/useAuth';
 import EmailPasswordSignUpForm from '../components/EmailPasswordSignupForm';
 import { createUser } from '../data/user';
-import Header from '../components/Header';
+import Header from '../components/common/Header';
 
 export default function Signup() {
   const router = useRouter();
