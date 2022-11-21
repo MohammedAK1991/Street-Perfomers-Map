@@ -17,7 +17,7 @@ import {
 import Link from 'next/link';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useRouter } from 'next/router';
-import useAuth from '../data/useAuth';
+import useAuth from '../../data/useAuth';
 
 export default function Header() {
   const router = useRouter();
