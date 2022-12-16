@@ -7,44 +7,31 @@ import {
   FormLabel,
   Heading,
   Input,
+  Text,
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Header from '../components/common/Header';
+import {
+  addPerformance,
+  deletePerformance,
+  editPerformance,
+  usePerformances,
+} from '../data/performances';
 import useAuth from '../data/useAuth';
-import { getEnvironmentUrl } from '../data/utils';
-import firebase from 'firebase/app';
 
-// type ArtistsPageProps = {};
-
-// const ArtistsPage: React.FC<ArtistsPageProps> = () => {
 const ArtistsPage = () => {
   const { auth } = useAuth();
 
   const [performanceTitle, setPerformanceTitle] = useState<string>('');
   const [performanceTime, setPerformanceTime] = useState<string>('');
+  const [editPerformanceID, setEditPerformanceID] = useState<string>('');
+  const [editPerformanceTitle, setEditPerformanceTitle] = useState<string>('');
+  const [editPerformanceTime, setEditPerformanceTime] = useState<string>('');
 
-  async function addPerformance(
-    auth: firebase.User | null,
-    performanceTitle: string,
-    performanceTime: string,
-  ) {
-    try {
-      const token = await auth?.getIdToken();
-      console.log(token, 'token');
-      const url = getEnvironmentUrl();
-      await fetch(`${url}performances/${auth?.uid}`, {
-        method: 'POST',
-        body: JSON.stringify({ performanceTitle, performanceTime }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-    } catch (error) {
-      console.log('error adding performance to user doc', error);
-    }
-  }
+  const { performances, loading, error, mutate } = usePerformances();
+  console.log('data', performances);
+  console.log('error', error);
 
   return (
     <>
@@ -56,24 +43,22 @@ const ArtistsPage = () => {
         </Head>
         <Header />
         <Heading textAlign='center' mt='100px'>
+          Probably a Modal that opens when we add a marker to the map <br></br>
           Enter Details of your Performance Artists!
         </Heading>
         <Center my='auto'>
           <chakra.form
             gap='4'
             onSubmit={async (event) => {
-              console.log('clicked');
               event.preventDefault();
               await addPerformance(auth, performanceTitle, performanceTime);
+              mutate();
             }}
             display='flex'
             alignSelf='stretch'
             flexDirection='column'
           >
-            <FormControl
-              // id='email'
-              rounded='md'
-            >
+            <FormControl rounded='md'>
               <FormLabel>Enter Performance Title</FormLabel>
               <Input
                 minW='300px'
@@ -82,7 +67,6 @@ const ArtistsPage = () => {
                 value={performanceTitle}
                 onChange={(event) => setPerformanceTitle(event.target.value)}
                 variant='outline'
-                // placeholder={t('placeholder_email')}
                 size='lg'
                 isRequired
                 _focus={{
@@ -90,10 +74,7 @@ const ArtistsPage = () => {
                 }}
               />
             </FormControl>
-            <FormControl
-              // id='password'
-              rounded='md'
-            >
+            <FormControl rounded='md'>
               <FormLabel>Enter Performance Time</FormLabel>
 
               <Input
@@ -118,13 +99,115 @@ const ArtistsPage = () => {
               minW='300px'
               variant='primary'
               bgColor='black'
+              isLoading={loading}
             >
               Submit{' '}
             </Button>
           </chakra.form>
         </Center>
+        <hr style={{ marginTop: '30px' }} />
+        <Heading textAlign='center' mt='100px'>
+          Probably a Modal that opens when we edit a marker to the map <br></br>
+          Enter edits of your Performance Artists!
+        </Heading>
+        <Center my='auto'>
+          <chakra.form
+            gap='4'
+            display='flex'
+            alignSelf='stretch'
+            flexDirection='column'
+            onSubmit={async (event) => {
+              console.log('clicked');
+              event.preventDefault();
+              await editPerformance(
+                auth,
+                editPerformanceTitle,
+                editPerformanceTime,
+                editPerformanceID,
+              );
+              mutate();
+            }}
+          >
+            <FormControl rounded='md'>
+              <FormLabel>enter Performance ID</FormLabel>
+              <Input
+                minW='300px'
+                alignSelf='stretch'
+                type='text'
+                value={editPerformanceID}
+                onChange={(event) => setEditPerformanceID(event.target.value)}
+                variant='outline'
+                size='lg'
+                isRequired
+                _focus={{ borderColor: 'secondary' }}
+              />
+            </FormControl>
+            <FormControl rounded='md'>
+              <FormLabel>Edit Performance Title</FormLabel>
+              <Input
+                minW='300px'
+                alignSelf='stretch'
+                type='text'
+                value={editPerformanceTitle}
+                onChange={(event) =>
+                  setEditPerformanceTitle(event.target.value)
+                }
+                variant='outline'
+                size='lg'
+                isRequired
+                _focus={{ borderColor: 'secondary' }}
+              />
+            </FormControl>
+            <FormControl rounded='md'>
+              <FormLabel>Edit Performance Time</FormLabel>
+              <Input
+                minW='300px'
+                value={editPerformanceTime}
+                onChange={(event) => setEditPerformanceTime(event.target.value)}
+                variant='outline'
+                size='lg'
+                isRequired
+                autoComplete='true'
+                _focus={{ borderColor: 'secondary' }}
+              />
+            </FormControl>
+            <Button
+              color='white'
+              size='lg'
+              type='submit'
+              pos='relative'
+              minW='300px'
+              variant='primary'
+              bgColor='black'
+              isLoading={loading}
+            >
+              Submit{' '}
+            </Button>
+          </chakra.form>
+        </Center>
+        <hr style={{ marginTop: '30px' }} />
+        <Text>{error && error.message}</Text>
+        {performances?.map((item: any) => (
+          <Flex
+            direction='column'
+            align='center'
+            key={item.id}
+            border='1px lightgrey solid'
+          >
+            <Text>{item.id}</Text>
+            <Text>{item.performance}</Text>
+            <Text>{item.performanceTime}</Text>
+            <Button
+              onClick={async () => {
+                await deletePerformance(auth, item.id);
+                mutate();
+              }}
+            >
+              Delete
+            </Button>
+          </Flex>
+        ))}
       </Flex>
-      ;
     </>
   );
 };
