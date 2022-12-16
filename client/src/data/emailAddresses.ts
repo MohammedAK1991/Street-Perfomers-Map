@@ -9,6 +9,7 @@ interface EmailAddress {
   email: string;
 }
 
+
 export default function useEmailAddresses(): {
   emailAddresses: EmailAddress[];
   loading: boolean;
@@ -28,6 +29,7 @@ export default function useEmailAddresses(): {
       .then((res) => setToken(res))
       .catch((err) => console.log(err));
   }, [auth]);
+
   const { data, error, mutate } = useSWR(
     auth && token ? [`${url}emails/${auth.uid}`, token] : null,
     fetcherWithBearerToken,
@@ -57,7 +59,7 @@ export async function addEmailAddress(
       body: JSON.stringify({ emailAddress }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       },
     });
   } catch (error) {
@@ -77,7 +79,7 @@ export async function deleteEmailAddress(
       body: JSON.stringify({ id }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       },
     });
   } catch (error) {
@@ -98,7 +100,7 @@ export async function editEmailAddress(
       body: JSON.stringify({ id, updatedEmailAddress }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       },
     });
   } catch (error) {
