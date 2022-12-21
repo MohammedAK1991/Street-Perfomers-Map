@@ -31,7 +31,6 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <Header />
 
       <Flex mx={['50px', '200px']} my='200px'>
         <LandingPageTabs />

@@ -75,7 +75,6 @@ export default function Signup() {
       bgColor='#fff'
       rounded='xl'
     >
-      <Header />
       <Stack
         align='center'
         rounded='md'

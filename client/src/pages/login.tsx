@@ -100,8 +100,6 @@ export default function Login() {
       bgColor='white'
       rounded='xl'
     >
-      <Header />
-
       <Stack
         align='center'
         rounded='md'

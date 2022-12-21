@@ -23,7 +23,6 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import firebase from '../data/firebase';
-import Header from '../components/common/Header';
 import useEmailAddresses, { addEmailAddress } from '../data/emailAddresses';
 import { getEmailBody, updateEmailBody } from '../data/emailBody';
 import useAuth from '../data/useAuth';
@@ -60,6 +59,7 @@ export default function Home() {
 
   const updateBody = useCallback(
     (emailText: string) => updateEmailBody(emailText),
+
     [],
   );
 
@@ -141,8 +141,6 @@ export default function Home() {
         <meta name='description' content='Calllypso coding assignemt' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-
-      <Header />
 
       <Flex flexGrow={1}>
         <Stack mr={10} p={['2', '7']}>

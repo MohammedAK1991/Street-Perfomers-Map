@@ -41,7 +41,6 @@ const ArtistsPage = () => {
           <meta name='description' content='Street Perfomers Map' />
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <Header />
         <Heading textAlign='center' mt='100px'>
           Probably a Modal that opens when we add a marker to the map <br></br>
           Enter Details of your Performance Artists!
