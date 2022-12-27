@@ -26,3 +26,18 @@ export async function fetcherWithBearerToken(url: string, token: string) {
 export async function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+
+export async function fetcherWithoutBearerToken(url: string) {
+  // const response = await fetch(url);
+  const response = await fetch(url, {
+    method: 'GET',
+  });
+
+  if (!response.ok) {
+    const error = new Error('An error occurred while fetching the data.');
+    throw error;
+  }
+
+  return response.json();
+}
