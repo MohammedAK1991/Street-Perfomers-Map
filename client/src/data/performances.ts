@@ -5,6 +5,10 @@ import { getEnvironmentUrl, fetcherWithBearerToken } from './utils';
 import firebase from 'firebase/app';
 
 interface performances {
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
   performance: string;
   performanceTime: string;
 }
@@ -51,6 +55,8 @@ export async function addPerformance(
   auth: firebase.User | null,
   performanceTitle: string,
   performanceTime: string,
+  performanceLatitude: number,
+  performanceLongitude: number,
 ) {
   try {
     const token = await auth?.getIdToken();
@@ -58,7 +64,12 @@ export async function addPerformance(
     const url = getEnvironmentUrl();
     await fetch(`${url}performances/${auth?.uid}`, {
       method: 'POST',
-      body: JSON.stringify({ performanceTitle, performanceTime }),
+      body: JSON.stringify({
+        performanceTitle,
+        performanceTime,
+        performanceLatitude,
+        performanceLongitude,
+      }),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -102,6 +113,7 @@ export const deletePerformance = async (
   // useCallback(async function deletePerformance(
   auth: firebase.User | null,
   id: string,
+  performance: string,
 ) => {
   try {
     const token = await auth?.getIdToken();
@@ -111,6 +123,7 @@ export const deletePerformance = async (
       method: 'DELETE',
       body: JSON.stringify({
         id,
+        performance,
       }),
       headers: {
         'Content-Type': 'application/json',
