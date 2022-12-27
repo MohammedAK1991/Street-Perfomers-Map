@@ -4,11 +4,14 @@ import { useLoadScript } from '@react-google-maps/api';
 import { Center, Flex, Spinner, Text } from '@chakra-ui/react';
 import LandingPageMap from '../components/landingPage/mapStuffs/LandingPageMap';
 import Head from 'next/head';
+import { useAllPerformances } from '../data/allPerformances';
 // type landingpageProps = {
 
 // };
 
 export default function LandingPage() {
+  const { allPerformances, loading, error, mutate } = useAllPerformances();
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
     libraries: ['places'],
@@ -22,9 +25,6 @@ export default function LandingPage() {
       </Center>
     );
 
-  console.log('isLoaded', isLoaded);
-  console.log('loadError', loadError);
-
   return (
     <>
       <Head>
@@ -32,26 +32,16 @@ export default function LandingPage() {
         <meta name='description' content='Street Perfomers Map' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Flex direction={['column-reverse', 'column-reverse', 'row']}>
-        <Flex width={['100%', '100%', '200px']} direction='column' px='2'>
+      <Flex direction={['column', 'column', 'row']}>
+        <Flex width={['100%', '100%', '300px']} px='2' direction='column'>
           <Text fontWeight='bold'>Todys Events!!!</Text>
-          <br />
-          Covent Garden
-          <br />
-          Trafalgar Square
-          <br />
-          Piccadilly Circus
-          <br />
-          Leicester Square
-          <br />
-          Oxford Circus
-          <br />
-          Tottenham Court Road
-          <br />
+          {allPerformances?.map((performance) => {
+            return <Flex key={Math.random()}>{performance.performance}</Flex>;
+          })}
         </Flex>
         <Flex
-          overflow='hidden'
-          //  width='100%' height='100%'
+          ml={['0', '0', '50px']}
+          overflow={['visible', 'visible', 'hidden']}
         >
           {isLoaded && <LandingPageMap isLoaded={isLoaded} />}
         </Flex>
