@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
-import { Heading, Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import firebase from '../data/firebase';
-import Header from '../components/Header';
+import Header from '../components/common/Header';
+import LandingPageTabs from '../components/landingPage/tabs/LandingPageTabs';
 
 export default function Home() {
   const router = useRouter();
@@ -16,18 +17,24 @@ export default function Home() {
   }, [router]);
 
   return (
-    <Box h='100vh' w='100vw' bg='white' display='flex' flexDirection='column'>
+    <Box
+      h='100vh'
+      w='100vw'
+      bg='white'
+      display='flex'
+      flexDirection='column'
+      backgroundImage='./images/backgroundimage.jpeg'
+    >
       <Head>
         <title>Street Perfomers Map </title>
-        <meta name='description' content='Calllypso coding assignemt' />
+        <meta name='description' content='Street Perfomers Map' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <Header />
 
-      <Heading mx='auto' my='auto'>
-        Welcome to the Street Performers Map!
-      </Heading>
+      <Flex mx={['50px', '200px']} my='200px'>
+        <LandingPageTabs />
+      </Flex>
     </Box>
   );
 }

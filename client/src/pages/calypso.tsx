@@ -23,7 +23,6 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import firebase from '../data/firebase';
-import Header from '../components/Header';
 import useEmailAddresses, { addEmailAddress } from '../data/emailAddresses';
 import { getEmailBody, updateEmailBody } from '../data/emailBody';
 import useAuth from '../data/useAuth';
@@ -60,6 +59,7 @@ export default function Home() {
 
   const updateBody = useCallback(
     (emailText: string) => updateEmailBody(emailText),
+
     [],
   );
 
@@ -135,40 +135,38 @@ export default function Home() {
   );
 
   return (
-    <Box h="100vh" w="100vw" bg="white" display="flex" flexDirection="column">
+    <Box h='100vh' w='100vw' bg='white' display='flex' flexDirection='column'>
       <Head>
         <title>Calllypso coding assignemt</title>
-        <meta name="description" content="Calllypso coding assignemt" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name='description' content='Calllypso coding assignemt' />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
-
-      <Header />
 
       <Flex flexGrow={1}>
         <Stack mr={10} p={['2', '7']}>
-          <Heading fontSize="xl">To</Heading>
+          <Heading fontSize='xl'>To</Heading>
 
           <Stack pt={2} spacing={4}>
-            <InputGroup w="full">
+            <InputGroup w='full'>
               <Input
                 value={newEmailAddress}
                 onChange={(e) => {
                   setNewEmailAddress(e.target.value);
                 }}
-                placeholder="foo@bar.com"
-                w="full"
+                placeholder='foo@bar.com'
+                w='full'
               />
               <InputRightElement>
                 <IconButton
-                  px="8"
-                  size="md"
-                  aria-label="edit email"
+                  px='8'
+                  size='md'
+                  aria-label='edit email'
                   onClick={async () => {
                     await addEmailAddress(auth, newEmailAddress);
                     mutate();
                     setNewEmailAddress('');
                   }}
-                  icon={<AddIcon color="blue.500" />}
+                  icon={<AddIcon color='blue.500' />}
                 />
               </InputRightElement>
             </InputGroup>
@@ -176,11 +174,11 @@ export default function Home() {
 
           {loadingEmailAddresses ? (
             <Spinner
-              thickness="4px"
-              speed="0.85s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="lg"
+              thickness='4px'
+              speed='0.85s'
+              emptyColor='gray.200'
+              color='blue.500'
+              size='lg'
             />
           ) : null}
 
@@ -196,70 +194,70 @@ export default function Home() {
             : null}
         </Stack>
 
-        <Divider height="100%" orientation="vertical" />
+        <Divider height='100%' orientation='vertical' />
 
         <Box flexGrow={1} p={['2', '8']}>
           <chakra.form onSubmit={sendEmail}>
             <Input
-              type="text"
+              type='text'
               value={subject}
-              placeholder="Subject"
+              placeholder='Subject'
               onChange={(e) => setSubject(e.target.value)}
-              mb="2"
+              mb='2'
             />
 
             <Textarea
-              w="full"
-              p="4"
+              w='full'
+              p='4'
               lineHeight={6}
-              minH="60vh"
+              minH='60vh'
               value={emailText}
-              name="message"
+              name='message'
               onChange={(e) => {
                 setEmailText(e.target.value);
               }}
-              placeholder="Please enter the email body here. The email will be sent to all the emails from your mailing list on the left. You may edit, add or delete items from your mailing list as you wish"
-              size="sm"
+              placeholder='Please enter the email body here. The email will be sent to all the emails from your mailing list on the left. You may edit, add or delete items from your mailing list as you wish'
+              size='sm'
             />
             <Autosave data={emailText} onSave={updateBody} />
 
-            <Button mt={2} type="submit">
+            <Button mt={2} type='submit'>
               Send
             </Button>
           </chakra.form>
         </Box>
       </Flex>
       {/* Modal to show progress of emails being sent to contact list*/}
-      <Modal isOpen={isOpen} onClose={onClose} isCentered size="2xl">
+      <Modal isOpen={isOpen} onClose={onClose} isCentered size='2xl'>
         <ModalOverlay />
-        <ModalContent px="4" py={8}>
+        <ModalContent px='4' py={8}>
           <ModalBody>
             <Stack
               spacing={8}
-              flex-direction="column"
-              justify="center"
-              align="center"
-              w="full"
+              flex-direction='column'
+              justify='center'
+              align='center'
+              w='full'
             >
               {!emailSentSuccessfully ? (
-                <Heading fontSize="lg" m={2}>
+                <Heading fontSize='lg' m={2}>
                   Sending email to {currentEmailRecepient}
                 </Heading>
               ) : null}
 
               {loading ? (
                 <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="blue.500"
-                  size="xl"
+                  thickness='4px'
+                  speed='0.65s'
+                  emptyColor='gray.200'
+                  color='blue.500'
+                  size='xl'
                 />
               ) : null}
 
               {emailSentSuccessfully ? (
-                <Heading fontSize="xl" m={2}>
-                  <CheckIcon boxSize="10" mr="2" color="green" />
+                <Heading fontSize='xl' m={2}>
+                  <CheckIcon boxSize='10' mr='2' color='green' />
                   Email sent successfully to {currentEmailRecepient}
                 </Heading>
               ) : null}

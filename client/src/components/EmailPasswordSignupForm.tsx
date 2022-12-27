@@ -60,20 +60,20 @@ export default function EmailPasswordSignUpForm({
 
   return (
     <chakra.form onSubmit={handleEmailPasswordSignUpSubmit}>
-      <VStack minW="360px" align="center" spacing="6">
-        <FormControl id="name" rounded="md">
+      <VStack minW='360px' align='center' spacing='6'>
+        <FormControl id='name' rounded='md'>
           <InputGroup>
-            <InputLeftElement mt="1" pointerEvents="none">
-              <Icon as={IoIosPerson} color="black" />
+            <InputLeftElement mt='1' pointerEvents='none'>
+              <Icon as={IoIosPerson} color='black' />
             </InputLeftElement>
             <Input
-              type="text"
+              type='text'
               value={name}
-              bgColor="white"
+              bgColor='white'
               onChange={handleNameInputChange}
-              variant="outline"
+              variant='outline'
               placeholder={'name'}
-              size="lg"
+              size='lg'
               isRequired
               _focus={{
                 borderColor: 'secondary',
@@ -85,20 +85,20 @@ export default function EmailPasswordSignUpForm({
           </InputGroup>
         </FormControl>
 
-        <FormControl id="email" rounded="md">
+        <FormControl id='email' rounded='md'>
           <InputGroup>
-            <InputLeftElement mt="1" pointerEvents="none">
-              <EmailIcon color="black" />
+            <InputLeftElement mt='1' pointerEvents='none'>
+              <EmailIcon color='black' />
             </InputLeftElement>
 
             <Input
-              type="text"
+              type='text'
               value={email}
-              bgColor="white"
+              bgColor='white'
               onChange={handleEmailInputChange}
-              variant="outline"
+              variant='outline'
               placeholder={'email'}
-              size="lg"
+              size='lg'
               isRequired
               _focus={{
                 borderColor: 'secondary',
@@ -110,20 +110,20 @@ export default function EmailPasswordSignUpForm({
           </InputGroup>
         </FormControl>
 
-        <FormControl id="password" rounded="md">
-          <InputGroup mb="4">
-            <InputLeftElement mt="1" pointerEvents="none">
-              <LockIcon color="black" />
+        <FormControl id='password' rounded='md'>
+          <InputGroup mb='4'>
+            <InputLeftElement mt='1' pointerEvents='none'>
+              <LockIcon color='black' />
             </InputLeftElement>
             <Input
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={handlePasswordInputChange}
-              variant="outline"
-              bgColor="white"
+              variant='outline'
+              bgColor='white'
               placeholder={'password'}
-              size="lg"
-              autoComplete="true"
+              size='lg'
+              autoComplete='true'
               isRequired
               _focus={{
                 borderColor: 'secondary',
@@ -133,30 +133,30 @@ export default function EmailPasswordSignUpForm({
               }}
             />
 
-            <InputRightElement mt="1" cursor="pointer">
+            <InputRightElement mt='1' cursor='pointer'>
               <Icon
                 as={FaEye}
-                color="black"
+                color='black'
                 onClick={handleShowPasswordClick}
               />
             </InputRightElement>
           </InputGroup>
         </FormControl>
 
-        <FormControl id="confirmPassword" rounded="md">
+        <FormControl id='confirmPassword' rounded='md'>
           <InputGroup>
-            <InputLeftElement mt="1" pointerEvents="none">
-              <LockIcon color="black" />
+            <InputLeftElement mt='1' pointerEvents='none'>
+              <LockIcon color='black' />
             </InputLeftElement>
             <Input
               type={showPassword ? 'text' : 'password'}
               value={confirmPassword}
               onChange={handleConfirmPasswordInputChange}
-              variant="outline"
-              bgColor="white"
+              variant='outline'
+              bgColor='white'
               placeholder={'repeat password'}
-              size="lg"
-              autoComplete="true"
+              size='lg'
+              autoComplete='true'
               py={5}
               px={4}
               isRequired
@@ -164,10 +164,10 @@ export default function EmailPasswordSignUpForm({
                 color: 'onSurfaceVariant',
               }}
             />
-            <InputRightElement cursor="pointer">
+            <InputRightElement cursor='pointer'>
               <Icon
                 as={FaEye}
-                color="black"
+                color='black'
                 onClick={handleShowPasswordClick}
               />
             </InputRightElement>
@@ -182,12 +182,12 @@ export default function EmailPasswordSignUpForm({
             !confirmPassword ||
             password !== confirmPassword
           }
-          alignSelf="stretch"
-          size="lg"
-          type="submit"
-          bgColor="#f4a261"
+          alignSelf='stretch'
+          size='lg'
+          type='submit'
+          bgColor='#fff'
           onClick={handleEmailPasswordSignUpSubmit}
-          color="black"
+          color='black'
         >
           sign up
         </Button>

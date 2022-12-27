@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { FaEye, FaGoogle } from 'react-icons/fa';
 import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 import { createUser } from '../data/user';
+import Header from '../components/common/Header';
 
 export default function Login() {
   const router = useRouter();
@@ -91,86 +92,94 @@ export default function Login() {
 
   return (
     <Flex
-      bg="surface"
+      bg='surface'
       flexGrow={1}
-      direction="column"
-      h="100vh"
-      w="100vw"
-      bgColor="#2a9d8f"
+      direction='column'
+      h='100vh'
+      w='100vw'
+      bgColor='white'
+      rounded='xl'
     >
-      <Stack align="center" rounded="md" bg="surface" m="auto" spacing="6">
-        <Flex align="center" alignSelf="stretch" direction="row">
-          <Heading mx="auto" fontWeight="700" fontSize="3xl" color="black">
+      <Stack
+        align='center'
+        rounded='md'
+        bg='surface'
+        m='auto'
+        p={10}
+        spacing='6'
+      >
+        <Flex align='center' alignSelf='stretch' direction='row'>
+          <Heading mx='auto' fontWeight='700' fontSize='3xl' color='primary'>
             Login
           </Heading>
         </Flex>
 
-        <Flex direction="row" color="blackwhite">
-          <Text fontSize="sm">not a member ?</Text>
+        <Flex direction='row' color='primary'>
+          <Text fontSize='sm'>not a member ?</Text>
 
-          <Link href="/signup" passHref>
+          <Link href='/signup' passHref>
             <Text
-              fontSize="sm"
-              fontWeight="600"
-              cursor="pointer"
-              textDecoration="underline"
-              color="blackwhite"
-              ml="2"
+              fontSize='sm'
+              fontWeight='600'
+              cursor='pointer'
+              textDecoration='underline'
+              color='blackwhite'
+              ml='2'
             >
               Signup
             </Text>
           </Link>
         </Flex>
 
-        <Stack align="center" spacing="6">
+        <Stack align='center' spacing='6'>
           <Button
-            size="lg"
+            size='lg'
             onClick={handleSignInWithGoogle}
-            pos="relative"
-            minW="360px"
+            pos='relative'
+            minW='360px'
           >
             <Icon
-              w="20px"
-              color="black"
-              pos="absolute"
-              left="16px"
+              w='20px'
+              color='black'
+              pos='absolute'
+              left='16px'
               as={FaGoogle}
             />
             Google
           </Button>
 
-          <Flex alignItems="center" alignSelf="stretch">
+          <Flex alignItems='center' alignSelf='stretch'>
             <Divider />
 
-            <Text mx="4" whiteSpace="nowrap" fontSize="sm">
+            <Text mx='4' whiteSpace='nowrap' fontSize='sm' color='primary'>
               continue with
             </Text>
 
             <Divider />
           </Flex>
           <chakra.form
-            gap="4"
+            gap='4'
             onSubmit={handleSignInWithEmail}
-            display="flex"
-            alignSelf="stretch"
-            flexDirection="column"
+            display='flex'
+            alignSelf='stretch'
+            flexDirection='column'
           >
-            <FormControl id="email" rounded="md">
+            <FormControl id='email' rounded='md'>
               <InputGroup>
-                <InputLeftElement mt="1" pointerEvents="none">
-                  <EmailIcon color="black" />
+                <InputLeftElement mt='1' pointerEvents='none'>
+                  <EmailIcon color='black' />
                 </InputLeftElement>
 
                 <Input
-                  minW="300px"
-                  alignSelf="stretch"
-                  bg="surface"
-                  type="text"
+                  minW='300px'
+                  alignSelf='stretch'
+                  bg='surface'
+                  type='text'
                   value={email}
                   onChange={handleEmailInputChange}
-                  variant="outline"
+                  variant='outline'
                   placeholder={'johndoe@gmail.com'}
-                  size="lg"
+                  size='lg'
                   isRequired
                   _focus={{
                     borderColor: 'secondary',
@@ -178,30 +187,30 @@ export default function Login() {
                 />
               </InputGroup>
             </FormControl>
-            <FormControl id="password" rounded="md">
+            <FormControl id='password' rounded='md'>
               <InputGroup>
-                <InputLeftElement mt="1" pointerEvents="none">
-                  <LockIcon color="black" />
+                <InputLeftElement mt='1' pointerEvents='none'>
+                  <LockIcon color='black' />
                 </InputLeftElement>
                 <Input
-                  minW="300px"
-                  bg="surface"
+                  minW='300px'
+                  bg='surface'
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={handlePasswordInputChange}
-                  variant="outline"
+                  variant='outline'
                   placeholder={'password'}
-                  size="lg"
+                  size='lg'
                   isRequired
-                  autoComplete="true"
+                  autoComplete='true'
                   _focus={{
                     borderColor: 'secondary',
                   }}
                 />
-                <InputRightElement mt="1" cursor="pointer">
+                <InputRightElement mt='1' cursor='pointer'>
                   <Icon
                     as={FaEye}
-                    color="black"
+                    color='black'
                     onClick={handleShowPasswordClick}
                   />
                 </InputRightElement>
@@ -209,14 +218,14 @@ export default function Login() {
             </FormControl>
 
             <Button
-              size="lg"
-              type="submit"
-              pos="relative"
-              minW="300px"
-              bgColor="#f4a261"
+              size='lg'
+              type='submit'
+              pos='relative'
+              minW='300px'
+              bgColor='#fff'
             >
-              <Icon pos="absolute" left="16px" as={EmailIcon} />
-              login
+              <Icon pos='absolute' left='16px' as={EmailIcon} />
+              Login
             </Button>
           </chakra.form>
         </Stack>
